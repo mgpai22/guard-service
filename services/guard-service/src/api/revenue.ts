@@ -1,5 +1,6 @@
 import { groupBy, reduce } from 'lodash-es';
 
+import { FastifyWithZod } from '@rosen-bridge/fastify-enhanced';
 import { ERGO_CHAIN } from '@rosen-chains/ergo';
 
 import { DatabaseAction } from '../db/databaseAction';
@@ -7,7 +8,6 @@ import { TokenChartData } from '../types/api';
 import { getTokenData } from '../utils/getTokenData';
 import { extractRevenueFromView } from '../utils/revenue';
 import {
-  FastifySeverInstance,
   MessageResponseSchema,
   RevenueChartQuerySchema,
   RevenueChartResponseSchema,
@@ -19,7 +19,7 @@ import {
  * setup revenue history route
  * @param server
  */
-const revenueHistoryRoute = (server: FastifySeverInstance) => {
+const revenueHistoryRoute = (server: FastifyWithZod) => {
   server.get(
     '/revenue/history',
     {
@@ -68,7 +68,7 @@ const revenueHistoryRoute = (server: FastifySeverInstance) => {
   );
 };
 
-const revenueChartRoute = (server: FastifySeverInstance) => {
+const revenueChartRoute = (server: FastifyWithZod) => {
   server.get(
     '/revenue/chart',
     {
@@ -113,7 +113,7 @@ const revenueChartRoute = (server: FastifySeverInstance) => {
   );
 };
 
-const revenueRoutes = async (server: FastifySeverInstance) => {
+const revenueRoutes = async (server: FastifyWithZod) => {
   revenueHistoryRoute(server);
   revenueChartRoute(server);
 };
